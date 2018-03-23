@@ -88,12 +88,15 @@ function incidenciasCrear() {
                       console.log(this.responseText);
                       var dt = this.responseText;
                       h = JSON.parse(dt).id;
+                      selecLabel(h);
+                      adjuntos(h);
+                      usuarioPredefinido(h);
                     }
                   });
 
-                  selecLabel(h);
-                  usuarioPredefinido(h);
-                  adjuntos(h);
+                //   selecLabel(h);
+                //   usuarioPredefinido(h);
+                //   adjuntos(h);
                 // selecLabel(data);
                 // usuarioPredefinido(data);
                 // adjuntos(data);
@@ -150,9 +153,10 @@ function selecLabel(data) {
 
     if (importante.checked == true) {
         var checkRQ = new XMLHttpRequest();
-        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
+        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
         checkRQ.send(datas);
     }
+
 }
 ///--------------------CREAR ADJUNTOS--------------------
 function adjuntos(data) {
@@ -168,7 +172,7 @@ function adjuntos(data) {
         } else {
             formData.append("file", document.getElementById('chooser' + i).files[0]);
             var request = new XMLHttpRequest();
-            request.open("POST", "https://api.trello.com/1/cards/" + data.id + "/attachments");
+            request.open("POST", "https://api.trello.com/1/cards/"+data+"/attachments?key="+appkey+"&token="+token);
             request.send(formData);
             arrData.push(request);
             spiner.style = 'display:block;';
@@ -211,10 +215,10 @@ function usuarioPredefinido(data) {
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
-    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
+    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
     usuRQ1.send(datas);
     var usuRQ2 = new XMLHttpRequest();
-    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
+    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
     usuRQ2.send(datas);
     arrRQ.push(usuRQ1);
     spiner.style = 'display:block;';
